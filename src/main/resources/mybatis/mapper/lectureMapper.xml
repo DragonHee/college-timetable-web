@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mybatis.mapper.LectureMapper">
+
+    <resultMap id="selectLectureMap" type="com.example.demo.model.vo.LectureAndMemoVO">
+        <id property="classCode" column="class_code" />
+        <id property="subjectName" column="subject_name" />
+        <id property="professorName" column="professor_name" />
+        <id property="startTime" column="start_time" />
+        <id property="endTime" column="end_time" />
+        <id property="location" column="location" />
+        <id property="dayOfWeek" column="dayofweek" />
+        <id property="selectedFlag" column="selected_flag" />
+        <id property="memoTitle" column="memo_title" />
+        <id property="memoTitle" column="memo_content" />
+    </resultMap>
+
+    <select id="selectAllLecture" resultMap="selectLectureMap">
+        SELECT * FROM lecture_with_memo_view;
+    </select>
+</mapper>

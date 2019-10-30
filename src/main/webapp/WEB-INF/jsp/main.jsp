@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,135 +28,32 @@
         </form>
 
         <ul class="list-lecture">
+            <c:forEach var="unSelectedLecture" items="${lectureList.unselected}">
             <li class="card-lecture" >
-                <a class="lecture-title" href="#">웹 프로그래밍</a>
+                <a class="lecture-title" href="#"><c:out value="${unSelectedLecture.subjectName}" /></a>
                 <h6 class="lecture-time">
                     <i class="material-icons ic-lecture-info">access_time</i>
-                    <span>09:00 - 10:50 | (월), (수)</span>
+                    <span>
+                        <fmt:formatNumber value="${unSelectedLecture.startTime}" pattern="00" />:00 - <fmt:formatNumber value="${unSelectedLecture.endTime}" pattern="00" />:00 |
+                        <c:forEach begin="0" end="${fn:length(unSelectedLecture.dayOfWeek) - 1}" varStatus="loop">
+                            <c:choose>
+                                <c:when test="${loop.index eq fn:length(unSelectedLecture.dayOfWeek) - 1}">
+                                    <c:out value="(${fn:substring(unSelectedLecture.dayOfWeek, loop.index, loop.index + 1)})" />
+                                </c:when>
+                                <c:otherwise>
+                                    <c:out value="(${fn:substring(unSelectedLecture.dayOfWeek, loop.index, loop.index + 1)}), " />
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </span>
                 </h6>
                 <ul class="list-lecture-info">
-                    <li>교과목 코드 : A0000001</li>
-                    <li>담당 교수 : 김진수</li>
-                    <li>강의실 : 공학관 204</li>
+                    <li>교과목 코드 : <span><c:out value="${unSelectedLecture.classCode}" /></span></li>
+                    <li>담당 교수 : <span><c:out value="${unSelectedLecture.professorName}" /></span></li>
+                    <li>강의실 : <span><c:out value="${unSelectedLecture.location}" /></span></li>
                 </ul>
             </li>
-
-            <li class="card-lecture" >
-                <a class="lecture-title" href="#">프로그래밍의 원리</a>
-                <h6 class="lecture-time">
-                    <i class="material-icons ic-lecture-info">access_time</i>
-                    <span>13:00 - 10:50 | (월), (수)</span>
-                </h6>
-                <ul class="list-lecture-info">
-                    <li>교과목 코드 : A0000002</li>
-                    <li>담당 교수 : 이지형</li>
-                    <li>강의실 : 공학1관 102</li>
-                </ul>
-            </li>
-
-            <li class="card-lecture" >
-                <a class="lecture-title" href="#">논리 설계</a>
-                <h6 class="lecture-time">
-                    <i class="material-icons ic-lecture-info">access_time</i>
-                    <span>16:00 - 17:00 | (월)</span>
-                </h6>
-                <ul class="list-lecture-info">
-                    <li>교과목 코드 : A0000003</li>
-                    <li>담당 교수 : 김진수</li>
-                    <li>강의실 : 공학관 204</li>
-                </ul>
-            </li>
-
-            <li class="card-lecture" >
-                <a class="lecture-title" href="#">자료 구조</a>
-                <h6 class="lecture-time">
-                    <i class="material-icons ic-lecture-info">access_time</i>
-                    <span>09:00 - 10:50 | (화), (목)</span>
-                </h6>
-                <ul class="list-lecture-info">
-                    <li>교과목 코드 : A0000004</li>
-                    <li>담당 교수 : 김진수</li>
-                    <li>강의실 : 공학관 204</li>
-                </ul>
-            </li>
-
-            <li class="card-lecture" >
-                <a class="lecture-title" href="#">알고리즘</a>
-                <h6 class="lecture-time">
-                    <i class="material-icons ic-lecture-info">access_time</i>
-                    <span>09:00 - 10:50 | (화), (목)</span>
-                </h6>
-                <ul class="list-lecture-info">
-                    <li>교과목 코드 : A0000005</li>
-                    <li>담당 교수 : 김진수</li>
-                    <li>강의실 : 공학관 204</li>
-                </ul>
-            </li>
-
-            <li class="card-lecture" >
-                <a class="lecture-title" href="#">컴퓨터 네트워크</a>
-                <h6 class="lecture-time">
-                    <i class="material-icons ic-lecture-info">access_time</i>
-                    <span>09:00 - 10:50 | (화)</span>
-                </h6>
-                <ul class="list-lecture-info">
-                    <li>교과목 코드 : A0000006</li>
-                    <li>담당 교수 : 김진수</li>
-                    <li>강의실 : 공학관 204</li>
-                </ul>
-            </li>
-
-            <li class="card-lecture" >
-                <a class="lecture-title" href="#">컴파일러</a>
-                <h6 class="lecture-time">
-                    <i class="material-icons ic-lecture-info">access_time</i>
-                    <span>09:00 - 10:50 | (수)</span>
-                </h6>
-                <ul class="list-lecture-info">
-                    <li>교과목 코드 : A0000007</li>
-                    <li>담당 교수 : 김진수</li>
-                    <li>강의실 : 공학관 204</li>
-                </ul>
-            </li>
-
-            <li class="card-lecture" >
-                <a class="lecture-title" href="#">데이터베이스</a>
-                <h6 class="lecture-time">
-                    <i class="material-icons ic-lecture-info">access_time</i>
-                    <span>09:00 - 10:50 | (목)</span>
-                </h6>
-                <ul class="list-lecture-info">
-                    <li>교과목 코드 : A0000008</li>
-                    <li>담당 교수 : 김진수</li>
-                    <li>강의실 : 공학관 204</li>
-                </ul>
-            </li>
-
-            <li class="card-lecture" >
-                <a class="lecture-title" href="#">데이터 통신</a>
-                <h6 class="lecture-time">
-                    <i class="material-icons ic-lecture-info">access_time</i>
-                    <span>09:00 - 10:50 | (금)</span>
-                </h6>
-                <ul class="list-lecture-info">
-                    <li>교과목 코드 : A0000009</li>
-                    <li>담당 교수 : 김진수</li>
-                    <li>강의실 : 공학관 204</li>
-                </ul>
-            </li>
-
-            <li class="card-lecture" >
-                <a class="lecture-title" href="#">운영체제</a>
-                <h6 class="lecture-time">
-                    <i class="material-icons ic-lecture-info">access_time</i>
-                    <span>09:00 - 10:50 | (금)</span>
-                </h6>
-                <ul class="list-lecture-info">
-                    <li>교과목 코드 : A0000010</li>
-                    <li>담당 교수 : 김진수</li>
-                    <li>강의실 : 공학관 204</li>
-                </ul>
-            </li>
+            </c:forEach>
         </ul>
     </section>
 
@@ -186,195 +86,58 @@
 
                 <div class="table-schedule-subject">
                     <ul class="list-lecture-item">
-                        <li class="timeline-vertical">
-                            <div class="top-info today">
-                                <h4 class="day">Mon</h4>
-                            </div>
-                            <ul>
-                                <li class="lecture-time two-hr hr-11" data-event="lecture-01">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">웹 프로그래밍</h6>
-                                            <h6 class="lecture-location">공학관 204</h6>
-                                        </div>
-                                        <div class="lecture-noti" data-toggle="tooltip" data-placement="top" title="" data-original-title="과제 설명 텍스트 과제 설명 텍스트 과제 설명 텍스트">
-                                            <i class="material-icons ic-lecture-noti">assignment</i>
-                                            <span class="lecture-noti-title">과제 제목 텍스트</span>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="lecture-time two-hr hr-13" data-event="lecture-02">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title ">프로그래밍의 원리</h6>
-                                            <h6 class="lecture-location">공학1관 102</h6>
-                                        </div>
-                                        <div class="lecture-noti" data-toggle="tooltip" data-placement="top" title="" data-original-title="과제 설명 텍스트 과제 설명 텍스트 과제 설명 텍스트">
-                                            <i class="material-icons ic-lecture-noti">assignment</i>
-                                            <span class="lecture-noti-title">과제 제목 텍스트</span>
-                                        </div>
-
-                                    </a>
-                                </li>
-
-                                <li class="lecture-time hr-16" data-event="lecture-03">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">논리 설계</h6>
-                                            <h6 class="lecture-location">공학1관 102</h6>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="timeline-vertical">
-                            <div class="top-info">
-                                <h4 class="day">Tue</h4>
-                            </div>
-                            <ul>
-                                <li class="lecture-time two-hr hr-10" data-event="lecture-04">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">자료 구조</h6>
-                                            <h6 class="lecture-location">공학1관 102</h6>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="lecture-time hr-12" data-event="lecture-05">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">알고리즘</h6>
-                                            <h6 class="lecture-location">공학1관 102</h6>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="lecture-time hr-16" data-event="lecture-06">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">컴퓨터 네트워크</h6>
-                                            <h6 class="lecture-location">공학1관 102</h6>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="timeline-vertical">
-                            <div class="top-info">
-                                <h4 class="day">Wed</h4>
-                            </div>
-
-                            <ul>
-                                <li class="lecture-time two-hr hr-10" data-event="lecture-01">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">웹 프로그래밍</h6>
-                                            <h6 class="lecture-location">공학관 204</h6>
-                                        </div>
-
-                                    </a>
-                                </li>
-
-                                <li class="lecture-time hr-12" data-event="lecture-07">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">컴파일러</h6>
-                                            <h6 class="lecture-location">공학관 602</h6>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="lecture-time two-hr hr-13" data-event="lecture-02">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title ">프로그래밍의 원리</h6>
-                                            <h6 class="lecture-location">공학1관 102</h6>
-                                        </div>
-                                        <div class="lecture-noti" data-toggle="tooltip" data-placement="top" title="" data-original-title="과제 설명 텍스트 과제 설명 텍스트 과제 설명 텍스트">
-                                            <i class="material-icons ic-lecture-noti">assignment</i>
-                                            <span class="lecture-noti-title">과제 제목 텍스트</span>
-                                        </div>
-
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                        <li class="timeline-vertical">
-                            <div class="top-info">
-                                <h4 class="day">Thu</h4>
-                            </div>
-
-                            <ul>
-                                <li class="lecture-time two-hr hr-10" data-event="lecture-04">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">자료 구조</h6>
-                                            <h6 class="lecture-location">공학1관 102</h6>
-                                        </div>
-                                        <div class="lecture-noti" data-toggle="tooltip" data-placement="top" title="" data-original-title="과제 설명 텍스트 과제 설명 텍스트 과제 설명 텍스트">
-                                            <i class="material-icons ic-lecture-noti">assignment</i>
-                                            <span class="lecture-noti-title">과제 제목 텍스트</span>
-                                        </div>
-
-                                    </a>
-                                </li>
-
-                                <li class="lecture-time hr-12" data-event="lecture-05">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">알고리즘</h6>
-                                            <h6 class="lecture-location">공학1관 102</h6>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="lecture-time hr-15" data-event="lecture-08">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">데이터베이스</h6>
-                                            <h6 class="lecture-location">공학1관 102</h6>
-                                        </div>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                        <li class="timeline-vertical">
-                            <div class="top-info">
-                                <h4 class="day">Fri</h4>
-                            </div>
-
-                            <ul>
-                                <li class="lecture-time hr-10" data-event="lecture-09">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">데이터 통신</h6>
-                                            <h6 class="lecture-location">공학1관 102</h6>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="lecture-time two-hr hr-12" data-event="lecture-10">
-                                    <a href="#">
-                                        <div class="lecture-info">
-                                            <h6 class="lecture-title">운영 체제</h6>
-                                            <h6 class="lecture-location">공학1관 102</h6>
-                                        </div>
-                                        <div class="lecture-noti" data-toggle="tooltip" data-placement="top" title="" data-original-title="과제 설명 텍스트 과제 설명 텍스트 과제 설명 텍스트">
-                                            <i class="material-icons ic-lecture-noti">assignment</i>
-                                            <span class="lecture-noti-title">과제 제목 텍스트</span>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <c:forEach begin="1" end="5" varStatus="loop_day">
+                            <li class="timeline-vertical">
+                                <div class="top-info today">
+                                    <h4 class="day">
+                                        <c:choose>
+                                            <c:when test="${loop_day.index == 1}">Mon<c:set var="cur_day" value="월"/></c:when>
+                                            <c:when test="${loop_day.index == 2}">Tue<c:set var="cur_day" value="화"/></c:when>
+                                            <c:when test="${loop_day.index == 3}">Wed<c:set var="cur_day" value="수"/></c:when>
+                                            <c:when test="${loop_day.index == 4}">Thu<c:set var="cur_day" value="목"/></c:when>
+                                            <c:when test="${loop_day.index == 5}">Fri<c:set var="cur_day" value="금"/></c:when>
+                                        </c:choose>
+                                    </h4>
+                                </div>
+                                <ul>
+                                    <c:forEach var="selectedLecture" items="${lectureList.selected}" varStatus="loop">
+                                        <c:if test="${fn:contains(selectedLecture.dayOfWeek, cur_day)}">
+                                           <c:choose>
+                                              <c:when test="${selectedLecture.endTime - selectedLecture.startTime == 2}">
+                                                <li class="lecture-time two-hr hr-${selectedLecture.startTime}" data-event="lecture-<fmt:formatNumber value="${loop.index + 1}" pattern="00" />">
+                                              </c:when>
+                                              <c:otherwise>
+                                                <li class="lecture-time hr-${selectedLecture.startTime}" data-event="lecture-<fmt:formatNumber value="${loop.index + 1}" pattern="00" />">
+                                              </c:otherwise>
+                                           </c:choose>
+                                            <a href="#">
+                                                <div class="class-code" style="display:none">${selectedLecture.classCode}</div>
+                                                <div class="professor-name" style="display:none">${selectedLecture.professorName}</div>
+                                                <div class="start-time" style="display:none">${selectedLecture.startTime}</div>
+                                                <div class="end-time" style="display:none">${selectedLecture.endTime}</div>
+                                                <div class="day-of-week" style="display:none">${selectedLecture.dayOfWeek}</div>
+                                                <div class="lecture-info">
+                                                    <h6 class="lecture-title">
+                                                        <c:out value="${selectedLecture.subjectName}" />
+                                                    </h6>
+                                                    <h6 class="lecture-location">
+                                                        <c:out value="${selectedLecture.location}" />
+                                                    </h6>
+                                                </div>
+                                                <c:if test="${not empty selectedLecture.memoTitle}">
+                                                    <div class="lecture-noti" data-toggle="tooltip" data-placement="top" title="" data-original-title="${selectedLecture.memoContent}">
+                                                        <i class="material-icons ic-lecture-noti">assignment</i>
+                                                        <span class="lecture-noti-title">
+                                                            <c:out value="${selectedLecture.memoTitle}" />
+                                                        </span>
+                                                    </div>
+                                                </c:if>
+                                            </a>
+                                        </c:if>
+                                     </c:forEach>
+                                </ul>
+                            </li>
+                        </c:forEach>
                     </ul>
                 </div>
             </div>
@@ -391,23 +154,23 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h3 class="lecture-title">웹 프로그래밍</h3>
+                <h3 class="lecture-title"></h3>
                 <ul class="lecture-info">
                     <li class="lecture-time">
                         <i class="material-icons ic-lecture-info">access_alarm</i>
-                        <span>강의 시간 : 09:00 - 10:50 | (월), (수)</span>
+                        <span></span>
                     </li>
                     <li class="lecture-code">
                         <i class="material-icons ic-lecture-info">code</i>
-                        <span>교과목 코드 : A0000001</span>
+                        <span></span>
                     </li>
                     <li class="lecture-code">
                         <i class="material-icons ic-lecture-info">school</i>
-                        <span>담당 교수 : 김진수</span>
+                        <span></span>
                     </li>
                     <li class="lecture-code">
                         <i class="material-icons ic-lecture-info">business</i>
-                        <span>강의실 : 공학관 204</span>
+                        <span></span>
                     </li>
                 </ul>
                 <div class="lecture-description">
@@ -433,23 +196,23 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h3 class="lecture-title">웹 프로그래밍</h3>
+                <h3 class="lecture-title"></h3>
                 <ul class="lecture-info">
                     <li class="lecture-time">
                         <i class="material-icons ic-lecture-info">access_alarm</i>
-                        <span>강의 시간 : 09:00 - 10:50 | (월), (수)</span>
+                        <span></span>
                     </li>
                     <li class="lecture-code">
                         <i class="material-icons ic-lecture-info">code</i>
-                        <span>교과목 코드 : A0000001</span>
+                        <span></span>
                     </li>
                     <li class="lecture-code">
                         <i class="material-icons ic-lecture-info">school</i>
-                        <span>담당 교수 : 김진수</span>
+                        <span></span>
                     </li>
                     <li class="lecture-code">
                         <i class="material-icons ic-lecture-info">business</i>
-                        <span>강의실 : 공학관 204</span>
+                        <span></span>
                     </li>
                 </ul>
                 <div class="lecture-description">

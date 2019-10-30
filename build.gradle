@@ -17,12 +17,19 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-test')
+
+    //mybatis 설정
     compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2")
     compile('org.springframework.boot:spring-boot-starter-jdbc')
     compile('mysql:mysql-connector-java')
 
+    //jsp를 내부적으로 지원하지 않기 때문에 따로 설정해야 다음과 같이 jsp를 사용할 수 있다.
     compile group: 'javax.servlet', name: 'jstl', version: '1.2'
     compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.16'
+
+    //lombok 설정
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
 }
 
 flyway {
