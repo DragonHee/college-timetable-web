@@ -14,7 +14,7 @@ public class MainController {
     @Autowired
     private LectureService lectureService;
 
-    @RequestMapping("/")
+    @RequestMapping(value = {"/", "/schedule"})
     public ModelAndView mainPage(Model model) {
         ModelAndView mav = new ModelAndView();
         Map<String, Object> map = lectureService.selectLectureList();

@@ -30,6 +30,9 @@ dependencies {
     //lombok 설정
     compileOnly 'org.projectlombok:lombok:1.18.10'
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
+    //html, css, js 자동 반영
+    compile('org.springframework.boot:spring-boot-devtools') //devtools
 }
 
 flyway {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mybatis.mapper.MemoMapper">
+
+
+    <resultMap id="selectMemoMap" type="com.example.demo.model.vo.MemoVO">
+        <id property="memoId" column="memo_id" />
+        <id property="classCode" column="class_code" />
+        <id property="memoTitle" column="memo_title" />
+        <id property="memoContent" column="memo_content" />
+    </resultMap>
+
+    <select id="selectAllMemo" resultMap="selectMemoMap">
+        SELECT * FROM memo_tb;
+    </select>
+
+    <select id="selectMemo" parameterType="hashMap" resultMap="selectMemoMap">
+        select * from memo_tb where class_code = #{classCode}
+    </select>
+
+    <insert id="writeMemo" parameterType="com.example.demo.model.vo.MemoVO" useGeneratedKeys="true" keyProperty="memoId">
+        insert into memo_tb values (default, #{classCode}, #{memoTitle}, #{memoContent})
+    </insert>
+
+    <delete id="deleteMemo" parameterType="hashMap">
+        delete from memo_tb where memo_id = #{memoId}
+    </delete>
+
+</mapper>

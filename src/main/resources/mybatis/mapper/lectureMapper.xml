@@ -4,7 +4,7 @@
 
 <mapper namespace="com.example.demo.mybatis.mapper.LectureMapper">
 
-    <resultMap id="selectLectureMap" type="com.example.demo.model.vo.LectureAndMemoVO">
+    <resultMap id="selectLectureMap" type="com.example.demo.model.vo.LectureVO">
         <id property="classCode" column="class_code" />
         <id property="subjectName" column="subject_name" />
         <id property="professorName" column="professor_name" />
@@ -13,11 +13,25 @@
         <id property="location" column="location" />
         <id property="dayOfWeek" column="dayofweek" />
         <id property="selectedFlag" column="selected_flag" />
-        <id property="memoTitle" column="memo_title" />
-        <id property="memoTitle" column="memo_content" />
     </resultMap>
 
     <select id="selectAllLecture" resultMap="selectLectureMap">
-        SELECT * FROM lecture_with_memo_view;
+        SELECT * FROM lecture_information_view;
     </select>
+
+    <select id="selectLecture" parameterType="hashMap" resultMap="selectLectureMap">
+        select * from lecture_information_view where class_code = #{classCode}
+    </select>
+
+    <update id="entrustLecture" parameterType="hashMap">
+        update class_tb set selected_flag = true where class_code = #{classCode}
+    </update>
+
+    <select id="getSelectedLectureTime" resultType="com.example.demo.model.vo.SelectedLectureTimeVO">
+        SELECT start_time startTime, end_time endTime, dayofweek dayOfWeek FROM class_tb WHERE selected_flag = TRUE;
+    </select>
+
+    <update id="deleteLecture" parameterType="hashMap">
+        update class_tb set selected_flag = false where class_code = #{classCode}
+    </update>
 </mapper>

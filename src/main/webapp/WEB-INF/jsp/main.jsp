@@ -7,10 +7,9 @@
 <html>
 <head>
     <meta charset="utf8">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -30,27 +29,27 @@
         <ul class="list-lecture">
             <c:forEach var="unSelectedLecture" items="${lectureList.unselected}">
             <li class="card-lecture" >
-                <a class="lecture-title" href="#"><c:out value="${unSelectedLecture.subjectName}" /></a>
+                <a class="lecture-title" href="#"><c:out value="${unSelectedLecture.lectureVO.subjectName}" /></a>
                 <h6 class="lecture-time">
                     <i class="material-icons ic-lecture-info">access_time</i>
                     <span>
-                        <fmt:formatNumber value="${unSelectedLecture.startTime}" pattern="00" />:00 - <fmt:formatNumber value="${unSelectedLecture.endTime}" pattern="00" />:00 |
-                        <c:forEach begin="0" end="${fn:length(unSelectedLecture.dayOfWeek) - 1}" varStatus="loop">
+                        <fmt:formatNumber value="${unSelectedLecture.lectureVO.startTime}" pattern="00" />:00 - <fmt:formatNumber value="${unSelectedLecture.lectureVO.endTime}" pattern="00" />:00 |
+                        <c:forEach begin="0" end="${fn:length(unSelectedLecture.lectureVO.dayOfWeek) - 1}" varStatus="loop">
                             <c:choose>
-                                <c:when test="${loop.index eq fn:length(unSelectedLecture.dayOfWeek) - 1}">
-                                    <c:out value="(${fn:substring(unSelectedLecture.dayOfWeek, loop.index, loop.index + 1)})" />
+                                <c:when test="${loop.index eq fn:length(unSelectedLecture.lectureVO.dayOfWeek) - 1}">
+                                    <c:out value="(${fn:substring(unSelectedLecture.lectureVO.dayOfWeek, loop.index, loop.index + 1)})" />
                                 </c:when>
                                 <c:otherwise>
-                                    <c:out value="(${fn:substring(unSelectedLecture.dayOfWeek, loop.index, loop.index + 1)}), " />
+                                    <c:out value="(${fn:substring(unSelectedLecture.lectureVO.dayOfWeek, loop.index, loop.index + 1)}), " />
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
                     </span>
                 </h6>
                 <ul class="list-lecture-info">
-                    <li>교과목 코드 : <span><c:out value="${unSelectedLecture.classCode}" /></span></li>
-                    <li>담당 교수 : <span><c:out value="${unSelectedLecture.professorName}" /></span></li>
-                    <li>강의실 : <span><c:out value="${unSelectedLecture.location}" /></span></li>
+                    <li>교과목 코드 : <span><c:out value="${unSelectedLecture.lectureVO.classCode}" /></span></li>
+                    <li>담당 교수 : <span><c:out value="${unSelectedLecture.lectureVO.professorName}" /></span></li>
+                    <li>강의실 : <span><c:out value="${unSelectedLecture.lectureVO.location}" /></span></li>
                 </ul>
             </li>
             </c:forEach>
@@ -101,38 +100,48 @@
                                 </div>
                                 <ul>
                                     <c:forEach var="selectedLecture" items="${lectureList.selected}" varStatus="loop">
-                                        <c:if test="${fn:contains(selectedLecture.dayOfWeek, cur_day)}">
+                                        <c:if test="${fn:contains(selectedLecture.lectureVO.dayOfWeek, cur_day)}">
                                            <c:choose>
-                                              <c:when test="${selectedLecture.endTime - selectedLecture.startTime == 2}">
-                                                <li class="lecture-time two-hr hr-${selectedLecture.startTime}" data-event="lecture-<fmt:formatNumber value="${loop.index + 1}" pattern="00" />">
+                                              <c:when test="${selectedLecture.lectureVO.endTime - selectedLecture.lectureVO.startTime == 2}">
+                                                <li class="lecture-time two-hr hr-${selectedLecture.lectureVO.startTime}" data-event="lecture-<fmt:formatNumber value="${loop.index + 1}" pattern="00" />">
                                               </c:when>
                                               <c:otherwise>
-                                                <li class="lecture-time hr-${selectedLecture.startTime}" data-event="lecture-<fmt:formatNumber value="${loop.index + 1}" pattern="00" />">
+                                                <li class="lecture-time hr-${selectedLecture.lectureVO.startTime}" data-event="lecture-<fmt:formatNumber value="${loop.index + 1}" pattern="00" />">
                                               </c:otherwise>
                                            </c:choose>
                                             <a href="#">
-                                                <div class="class-code" style="display:none">${selectedLecture.classCode}</div>
-                                                <div class="professor-name" style="display:none">${selectedLecture.professorName}</div>
-                                                <div class="start-time" style="display:none">${selectedLecture.startTime}</div>
-                                                <div class="end-time" style="display:none">${selectedLecture.endTime}</div>
-                                                <div class="day-of-week" style="display:none">${selectedLecture.dayOfWeek}</div>
+                                                <div class="class-code" style="display:none">${selectedLecture.lectureVO.classCode}</div>
+                                                <div class="professor-name" style="display:none">${selectedLecture.lectureVO.professorName}</div>
+                                                <div class="start-time" style="display:none">${selectedLecture.lectureVO.startTime}</div>
+                                                <div class="end-time" style="display:none">${selectedLecture.lectureVO.endTime}</div>
+                                                <div class="day-of-week" style="display:none">${selectedLecture.lectureVO.dayOfWeek}</div>
                                                 <div class="lecture-info">
                                                     <h6 class="lecture-title">
-                                                        <c:out value="${selectedLecture.subjectName}" />
+                                                        <c:out value="${selectedLecture.lectureVO.subjectName}" />
                                                     </h6>
                                                     <h6 class="lecture-location">
-                                                        <c:out value="${selectedLecture.location}" />
+                                                        <c:out value="${selectedLecture.lectureVO.location}" />
                                                     </h6>
                                                 </div>
-                                                <c:if test="${not empty selectedLecture.memoTitle}">
-                                                    <div class="lecture-noti" data-toggle="tooltip" data-placement="top" title="" data-original-title="${selectedLecture.memoContent}">
-                                                        <i class="material-icons ic-lecture-noti">assignment</i>
-                                                        <span class="lecture-noti-title">
-                                                            <c:out value="${selectedLecture.memoTitle}" />
+                                                <ul>
+                                                <c:if test="${fn:length(selectedLecture.memoList) ne 0}">
+                                                    <c:forEach var="memo" items="${selectedLecture.memoList}" varStatus="loop">
+                                                        <li>
+                                                        <div class="lecture-noti" data-toggle="tooltip" data-placement="top" title="" data-original-title="${memo.memoContent}">
+                                                            <i class="material-icons ic-lecture-noti">assignment</i>
+                                                            <span class="lecture-noti-title">
+                                                            <c:out value="${memo.memoTitle}" />
                                                         </span>
-                                                    </div>
+                                                        </div>
+                                                        <div class="memo-id"  style="display:none">${memo.memoId}</div>
+                                                        <div class="memo-title-${loop.index + 1}"  style="display:none">${memo.memoTitle}</div>
+                                                        <div class="memo-content-${loop.index + 1}" style="display:none">${memo.memoContent}</div>
+                                                        </li>
+                                                    </c:forEach>
                                                 </c:if>
-                                            </a>
+                                                </ul>
+                                             </a>
+                                            </li>
                                         </c:if>
                                      </c:forEach>
                                 </ul>
@@ -224,15 +233,6 @@
                 <div class="lecture-memo">
                     <h5 class="memo-header">메모</h5>
                     <ul>
-                        <li class="memo-list">
-                            <div class="memo-content" data-toggle="tooltip" data-placement="top" title="" data-original-title="과제 설명 텍스트 과제 설명 텍스트 과제 설명 텍스트">
-                                <i class="material-icons ic-lecture-noti">assignment</i>
-                                <span class="lecture-noti-title">과제 제목 텍스트</span>
-                            </div>
-                            <div class="memo-btn">
-                                <a href=""><i class="material-icons ic-lecture-noti">delete</i></a>
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -250,21 +250,20 @@
             </div>
         </div>
     </div>
-</div>
+</div>:
 
 <div id="PopoverContent" style="display: none;">
     <h5 class="schedule-title">메모 등록하기</h5>
     <div class="form-group">
-        <label class="col-form-label">제목
-            <input type="text" class="form-control" id="recipient-name" placeholder="제목 추가">
-        </label>
+        <label for="recipient-name" class="col-form-label">제목</label>
+        <input onkeydown="memoTitle()" type="text" class="form-control" id="recipient-name" placeholder="제목 추가">
     </div>
     <div class="form-group">
         <label for="message-text" class="col-form-label">설명</label>
         <textarea class="form-control" id="message-text" placeholder="설명 추가"></textarea>
     </div>
-    <button type="button" class="btn btn-primary btn-save">등록</button>
+    <button id="memo-entrust-btn" type="button" class="btn btn-primary btn-save" onclick="entrustMemo()">등록</button>
 </div>
-
+<script src="js/main.js"></script>
 </body>
 </html>
