@@ -256,7 +256,7 @@
     <h5 class="schedule-title">메모 등록하기</h5>
     <div class="form-group">
         <label for="recipient-name" class="col-form-label">제목</label>
-        <input onkeydown="memoTitle()" type="text" class="form-control" id="recipient-name" placeholder="제목 추가">
+        <input  type="text" class="form-control" id="recipient-name" placeholder="제목 추가">
     </div>
     <div class="form-group">
         <label for="message-text" class="col-form-label">설명</label>

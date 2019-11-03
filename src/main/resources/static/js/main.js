@@ -87,7 +87,6 @@ $( document ).ready(function() {
                 dayOfWeek : dayOfWeek
             },
             success:function(result){
-                console.log(result);
                 if(result != null){
                     alert("등록이 완료되었습니다.");
                     $.fn.addLecture(result);
@@ -97,7 +96,6 @@ $( document ).ready(function() {
                 }
             },
             error: function (err) {
-                console.log(err);
                 alert("등록에 실패하였습니다.(수강 과목의 시간을 확인해주세요)");
             }
         });
@@ -155,7 +153,6 @@ $( document ).ready(function() {
                     var dayOfWeek = result.dayOfWeek;
 
                     var timeInfo = pad(startTime, 2) + ":00 - " + pad(endTime, 2) + ":00 | ";
-                    console.log(timeInfo);
                     for(var i = 0 ; i < dayOfWeek.length; i++){
                         timeInfo += '(' + dayOfWeek.charAt(i) + '), '
                     }
@@ -285,6 +282,7 @@ $( document ).ready(function() {
             }
         }
     };
+
 });
 // 메모삭제 버튼 클릭
 function deleteMemo(memoId) {
@@ -320,7 +318,6 @@ function entrustMemo(){
     var startTime = timeArr[0];
     var endTime = timeArr[1];
     var dayOfWeek = timeArr[2];
-    console.log(classCode);
     memoTitle = "메모 제목";
     memoContent = "메모 내용 텍스트";
 
@@ -336,9 +333,7 @@ function entrustMemo(){
         success:function(result){
             if(result != null){
                 alert("새로운 메모가 작성되었습니다.");
-                console.log(result.memoId);
                 $.fn.addMemo(result.memoId, result.memoTitle, result.memoContent);
-                console.log(result.memoId);
                 var str = '';
                 str += '<li>';
                 str += '<div class="lecture-noti" data-toggle="tooltip" data-placement="top" title="" data-original-title="' + result.memoContent + '">';
@@ -349,7 +344,6 @@ function entrustMemo(){
                 str += '<div class="memo-title-' + (i + 1) + '" style="display:none">' + result.memoTitle + '</div>';
                 str += '<div class="memo-content-' + (i + 1) + '" style="display:none">' + result.memoContent + '</div>';
                 str += '</li>';
-            console.log(result.memoId);
                 for(var i = 0 ; i < dayOfWeek.length; i++){
                     if(dayOfWeek.charAt(i) == '월'){
                         var tagLocation = $('.timeline-vertical > .top-info > .day:contains("Mon")').parent().siblings('ul');
@@ -377,6 +371,5 @@ function entrustMemo(){
         }
     });
 
-    console.log(    $('.timeline-vertical > .top-info > .day:contains("Mon")').parent().siblings('ul li a .class-code:contains("PG1807-01")').siblings('ul').html());
 };
 
